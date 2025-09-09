@@ -49,4 +49,26 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패");
         }
     }
+
+    @PostMapping("/find-id")
+    public ResponseEntity<?> findUsername(@RequestBody EmailRequestDTO request) {
+        try {
+            String username = userService.findUsernameByEmail(request.getEmail());
+            Map<String, String> response = new HashMap<>();
+            response.put("username", username);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> restPassword(@RequestBody ResetPasswordRequestDTO request) {
+        try {
+            userService.restPasssword(request.getUsername(), request.getEmail());
+            return ResponseEntity.ok("임시 비밀번호를 이메일로 전송했습니다.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 }

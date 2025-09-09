@@ -1,16 +1,23 @@
 package com.example.dayglow.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final EmailUtil emailUtil;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, EmailUtil emailUtil, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.emailUtil = emailUtil;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public String create(SiteUser user) {
@@ -25,5 +32,25 @@ public class UserService {
         SiteUser user = userRepository.findByUsername(username);
         if (user == null) return false;
         return user.getPassword().equals(password);
+    }
+
+    public String findUsernameByEmail(String email) {
+        SiteUser user = userRepository.findByEmail(email)
+                .orElseThrow(()-> new RuntimeException("해당 이메일로 가입된 사용자가 없습니다."));
+        return user.getUsername();
+    }
+
+    public void restPasssword(String username, String email) {
+        SiteUser user = userRepository.findByUsernameAndEmail(username, email)
+                .orElseThrow(()-> new RuntimeException("입력한 정보와 일치하는 사용자가 없습니다."));
+
+        String tempPassword = UUID.randomUUID().toString().substring(0, 8);
+
+        user.setPassword(passwordEncoder.encode(tempPassword));
+        userRepository.save(user);
+
+        String subject = "임시 비밀번호 안내";
+        String message = "임시 비밀번호: " + tempPassword + "\n로그인 후 비밀번호를 변경해주세요.";
+        emailUtil.sendEmail(email, subject, message);
     }
 }
