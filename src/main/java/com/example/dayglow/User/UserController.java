@@ -65,7 +65,7 @@ public class UserController {
     @PostMapping("/reset-password")
     public ResponseEntity<?> restPassword(@RequestBody ResetPasswordRequestDTO request) {
         try {
-            userService.restPasssword(request.getUsername(), request.getEmail());
+            userService.restPassword(request.getUsername(), request.getEmail());
             return ResponseEntity.ok("임시 비밀번호를 이메일로 전송했습니다.");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

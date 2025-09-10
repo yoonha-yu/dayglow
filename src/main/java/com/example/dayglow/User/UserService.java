@@ -40,7 +40,7 @@ public class UserService {
         return user.getUsername();
     }
 
-    public void restPasssword(String username, String email) {
+    public void restPassword(String username, String email) {
         SiteUser user = userRepository.findByUsernameAndEmail(username, email)
                 .orElseThrow(()-> new RuntimeException("입력한 정보와 일치하는 사용자가 없습니다."));
 
