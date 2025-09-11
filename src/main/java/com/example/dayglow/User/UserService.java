@@ -31,7 +31,7 @@ public class UserService {
     public boolean login(String username, String password) {
         SiteUser user = userRepository.findByUsername(username);
         if (user == null) return false;
-        return user.getPassword().equals(password);
+        return passwordEncoder.matches(password, user.getPassword());
     }
 
     public String findUsernameByEmail(String email) {
@@ -44,13 +44,24 @@ public class UserService {
         SiteUser user = userRepository.findByUsernameAndEmail(username, email)
                 .orElseThrow(()-> new RuntimeException("입력한 정보와 일치하는 사용자가 없습니다."));
 
+        if(!user.getEmail().equals(email)){
+            throw new RuntimeException("이메일 불일치");
+        }
+
         String tempPassword = UUID.randomUUID().toString().substring(0, 8);
 
         user.setPassword(passwordEncoder.encode(tempPassword));
         userRepository.save(user);
 
-        String subject = "임시 비밀번호 안내";
-        String message = "임시 비밀번호: " + tempPassword + "\n로그인 후 비밀번호를 변경해주세요.";
-        emailUtil.sendEmail(email, subject, message);
+        System.out.println("임시 비밀번호: " + tempPassword + ", 이메일: " + email);
+
+        try {
+            String subject = "임시 비밀번호 안내";
+            String message = "임시 비밀번호: " + tempPassword + "\n로그인 후 비밀번호를 변경해주세요.";
+//            emailUtil.sendEmail(email, subject, message);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("이메일 전송 실패: " + e.getMessage());
+        }
     }
 }
