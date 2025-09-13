@@ -38,15 +38,15 @@ public class ProductService {
         return productRepository.save(product);
     }
     public Product updateProduct(Long id, Product updateProduct) {
-        Product existngProduct = productRepository.findById(id).orElseThrow(()-> new RuntimeException("상품을 찾을 수 없습니다. ID" + id));
-        existngProduct.setName(updateProduct.getName());
-        existngProduct.setCategory(updateProduct.getCategory());
-        existngProduct.setDescription(updateProduct.getDescription());
-        existngProduct.setPrice(updateProduct.getPrice());
-        existngProduct.setStock(updateProduct.getStock());
-        existngProduct.setImageUrl(updateProduct.getImageUrl());
+        Product existingProduct = productRepository.findById(id).orElseThrow(()-> new RuntimeException("상품을 찾을 수 없습니다. ID" + id));
+        existingProduct.setName(updateProduct.getName());
+        existingProduct.setCategory(updateProduct.getCategory());
+        existingProduct.setDescription(updateProduct.getDescription());
+        existingProduct.setPrice(updateProduct.getPrice());
+        existingProduct.setStock(updateProduct.getStock());
+        existingProduct.setImageUrl(updateProduct.getImageUrl());
 
-        return productRepository.save(existngProduct);
+        return productRepository.save(existingProduct);
     }
     public void deleteProduct(Long id) {
         Product existingProduct = productRepository.findById(id).orElseThrow(()-> new RuntimeException("상품을 찾을 수 없습니다. ID" + id));
