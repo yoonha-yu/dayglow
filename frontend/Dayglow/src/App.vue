@@ -9,5 +9,4 @@ export default {
 </script>
 
 <style>
-/* 필요하면 전역 스타일만 추가 */
 </style>
