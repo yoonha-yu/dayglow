@@ -66,7 +66,9 @@
 
         <div class="category-scroll" ref="categoryScroll">
           <div class="category-card" v-for="category in categories" :key="category.id">
-            <img :src="category.image" :alt="category.name" />
+            <div class="category-image">
+              <img :src="category.image" :alt="category.name" />
+            </div>
             <div class="category-info">
               <h3>{{ category.name }}</h3>
               <p>{{ category.itemCount }} items</p>
@@ -159,3 +161,5 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss" src="@/assets/styles/page/HomeView.scss"></style>
