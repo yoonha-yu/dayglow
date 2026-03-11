@@ -13,11 +13,14 @@
       </div>
 
       <div class="summary-cards">
-        <div class="summary-card">
+        <div class="summary-card summary-card--point">
           <p class="summary-label">적립금</p>
           <p class="summary-value">0 P</p>
         </div>
-        <div class="summary-card">
+        <div
+          class="summary-card summary-card--coupon"
+          @click="goToCoupons"
+        >
           <p class="summary-label">쿠폰</p>
           <p class="summary-value">0장</p>
         </div>
@@ -122,6 +125,11 @@ export default {
   computed: {
     userInitial() {
       return this.username ? this.username.charAt(0).toUpperCase() : 'U'
+    }
+  },
+  methods: {
+    goToCoupons() {
+      this.$router.push('/mypage/coupons')
     }
   }
 }
