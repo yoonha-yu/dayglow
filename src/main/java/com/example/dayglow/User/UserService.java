@@ -40,7 +40,7 @@ public class UserService {
         return user.getUsername();
     }
 
-    public void restPassword(String username, String email) {
+    public void resetPassword(String username, String email) {
         SiteUser user = userRepository.findByUsernameAndEmail(username, email)
                 .orElseThrow(()-> new RuntimeException("입력한 정보와 일치하는 사용자가 없습니다."));
 
@@ -63,5 +63,13 @@ public class UserService {
             e.printStackTrace();
             throw new RuntimeException("이메일 전송 실패: " + e.getMessage());
         }
+    }
+
+    public void deleteUser(String username) {
+
+        SiteUser user = userRepository.findByUsername(username)
+                .orElseThrow(()-> new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        userRepository.delete(user);
     }
 }

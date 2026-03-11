@@ -63,10 +63,23 @@ public class UserController {
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<?> restPassword(@RequestBody ResetPasswordRequestDTO request) {
+    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequestDTO request) {
         try {
-            userService.restPassword(request.getUsername(), request.getEmail());
+            userService.resetPassword(request.getUsername(), request.getEmail());
             return ResponseEntity.ok("임시 비밀번호를 이메일로 전송했습니다.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> deleteUser(@RequestBody Map<String, String> request) {
+
+        String username = request.get("username");
+
+        try {
+            userService.deleteUser(username);
+            return ResponseEntity.ok("회원탈퇴 완료");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

@@ -1,0 +1,26 @@
+@import './AuthCommon.scss';
+
+.auth-card {
+  max-width: 480px;
+}
+
+.phone-row {
+  display: flex;
+  gap: 8px;
+}
+
+.outline-button {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid #555;
+  background: transparent;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: #fff;
+  }
+}
+
