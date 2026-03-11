@@ -1,12 +1,15 @@
 <template>
-  <RouterView />
+  <Header />
+
+  <router-view />
 </template>
 
 <script>
-export default {
-  name: 'App'
+import Header from './components/Header.vue'
+
+export default{
+  components:{
+    Header
+  }
 }
 </script>
-
-<style>
-</style>

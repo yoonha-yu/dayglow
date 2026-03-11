@@ -4,7 +4,7 @@
     <section class="main-banner">
       <img :src="bannerImage" alt="배너" class="banner-img" />
       <div class="banner-overlay">
-        <h1>The Art of Modern<br>Interior Living</h1>
+        <h1>DAYGLOW<br>dayglow</h1>
       </div>
     </section>
 

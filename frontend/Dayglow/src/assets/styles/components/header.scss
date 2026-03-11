@@ -1,0 +1,157 @@
+.header {
+  width: 100%;
+  background: #111;
+  color: #fff;
+  padding: 16px 40px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 30;
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .logo {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 1px;
+
+    a{
+      color: #fff;
+      text-decoration: none;
+      cursor: pointer;
+      padding: 0;
+
+      &:hover {
+        background: transparent;
+        color: #fff;
+      }
+    }
+  }
+
+  .category-menu{
+    position: relative;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+
+    .category-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #fff;
+    }
+
+    .caret-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        width: 10px;
+        height: 10px;
+        color: #fff;
+      }
+    }
+
+    .dropdown{
+      position: absolute;
+      top: 40px;
+      left: 0;
+      background: #222;
+      padding: 12px 18px;
+      border-radius: 6px;
+      z-index: 50;
+
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 140px;
+
+      a{
+        color: #fff;
+        text-decoration: none;
+        font-size: 14px;
+
+        &:hover{
+          color: #ddd;
+        }
+      }
+    }
+
+    &.is-open {
+      .dropdown {
+        display: flex;
+      }
+    }
+  }
+
+  .menu-right{
+    display: flex;
+    align-items: center;
+    gap : 28px;
+
+    .login{
+      font-size: 18px;
+      cursor: pointer;
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 16px;
+      transition: background-color 0.25s ease, color 0.25s ease;
+
+      &:hover {
+        background: #fff;
+        color: #111;
+      }
+    }
+
+    .cart{
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      svg{
+        width: 27px;
+        height: 27px;
+        color: #fff;
+      }
+    }
+
+    .search{
+      display: flex;
+      align-items: center;
+      background: #222;
+      border-radius: 20px;
+      padding: 7px 14px;
+
+      input{
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #fff;
+        font-size: 16px;
+        width: 190px;
+      }
+
+      button{
+        background: none;
+        border: none;
+        cursor: pointer;
+
+        svg{
+          width: 22px;
+          height: 22px;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
