@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -29,9 +30,9 @@ public class UserService {
     }
 
     public boolean login(String username, String password) {
-        SiteUser user = userRepository.findByUsername(username);
-        if (user == null) return false;
-        return passwordEncoder.matches(password, user.getPassword());
+        Optional<SiteUser> user = userRepository.findByUsername(username);
+        if (user.isEmpty()) return false;
+        return passwordEncoder.matches(password, user.get().getPassword());
     }
 
     public String findUsernameByEmail(String email) {
