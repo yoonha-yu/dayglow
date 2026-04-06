@@ -17,10 +17,13 @@ public class SiteUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(unique = true)
     private String username;
     private String password;
     private String email;
+
+    @Column(nullable = false)
+    private int money = 0;
 }

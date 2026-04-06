@@ -1,6 +1,7 @@
 package com.example.dayglow.Product.Cart;
 
 import com.example.dayglow.Product.Product;
+import com.example.dayglow.global.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,7 +21,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @NoArgsConstructor
 
-public class CartItem extends EntityData {
+public class CartItem extends BaseEntity {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
