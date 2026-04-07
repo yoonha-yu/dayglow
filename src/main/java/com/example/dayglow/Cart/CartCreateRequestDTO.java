@@ -1,4 +1,4 @@
-package com.example.dayglow.Product.Cart;
+package com.example.dayglow.Cart;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

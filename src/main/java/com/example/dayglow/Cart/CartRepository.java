@@ -1,4 +1,4 @@
-package com.example.dayglow.Product.Cart;
+package com.example.dayglow.Cart;
 
 import com.example.dayglow.User.SiteUser;
 import org.springframework.data.jpa.repository.JpaRepository;

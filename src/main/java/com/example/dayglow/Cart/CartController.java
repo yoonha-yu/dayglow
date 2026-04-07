@@ -1,4 +1,4 @@
-package com.example.dayglow.Product.Cart;
+package com.example.dayglow.Cart;
 
 import com.example.dayglow.User.SiteUser;
 import com.example.dayglow.User.UserRepository;
@@ -46,8 +46,9 @@ public class CartController {
     @PostMapping("/carts")
     @ResponseStatus(HttpStatus.CREATED)
     public Response create(@Valid @RequestBody CartCreateRequestDTO requestDTO) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        SiteUser siteUser = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        SiteUser siteUser = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+        SiteUser siteUser = getCurrentUser();
         cartService.create(requestDTO, siteUser);
         return Response.success();
     }
@@ -55,16 +56,18 @@ public class CartController {
     @GetMapping("/carts")
     @ResponseStatus(HttpStatus.OK)
     public Response findAll() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        SiteUser siteUser = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        SiteUser siteUser = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+        SiteUser siteUser = getCurrentUser();
         return Response.success(cartService.findAll(siteUser));
     }
 
     @DeleteMapping("/carts/{cartItemId}")
     @ResponseStatus(HttpStatus.OK)
     public Response deleteById(@PathVariable("cartItemId") Long id) {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    SiteUser siteUser = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+//    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//    SiteUser siteUser = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+    SiteUser siteUser = getCurrentUser();
     cartService.deleteById(id, siteUser);
     return Response.success();
     }
@@ -72,8 +75,9 @@ public class CartController {
     @PostMapping("/carts/buying")
     @ResponseStatus(HttpStatus.OK)
     public Response buyingAll() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        SiteUser siteUser = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        SiteUser siteUser = userRepository.findByUsername(authentication.getName()).orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
+        SiteUser siteUser = getCurrentUser();
         cartService.buyingAll(siteUser);
         return Response.success();
     }

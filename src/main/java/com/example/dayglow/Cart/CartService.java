@@ -1,4 +1,4 @@
-package com.example.dayglow.Product.Cart;
+package com.example.dayglow.Cart;
 
 import com.example.dayglow.Product.Product;
 import com.example.dayglow.Product.ProductRepository;
@@ -40,9 +40,11 @@ public class CartService {
         if (cartItem != null) {
             // 있으면 수량 증가
             cartItem.setQuantity(cartItem.getQuantity() + requestDTO.getQuantity());
+            cartItemRepository.save(cartItem);
         } else {
             // 없으면 새로 생성
             cartItem = new CartItem(cart, product, requestDTO.getQuantity());
+            cartItemRepository.save(cartItem);
         }
     }
 
