@@ -35,7 +35,7 @@
         Login
       </router-link>
 
-      <div class="cart">
+      <div class="cart" @click="handleCartClick">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="9" cy="20" r="1.8" />
           <circle cx="18" cy="20" r="1.8" />
@@ -55,6 +55,26 @@
 
     </div>
 
+    <!-- 로그인 안내 모달 -->
+    <div
+      v-if="showCartLoginModal"
+      class="cart-login-modal-backdrop"
+      @click.self="closeCartLoginModal"
+    >
+      <div class="cart-login-modal">
+        <h2>로그인이 필요한 서비스입니다</h2>
+        <p>장바구니는 로그인 후 이용하실 수 있어요.<br />지금 로그인하시겠어요?</p>
+        <div class="modal-actions">
+          <button type="button" class="secondary" @click="closeCartLoginModal">
+            나중에 할게요
+          </button>
+          <button type="button" class="primary" @click="goToLoginFromModal">
+            로그인하기
+          </button>
+        </div>
+      </div>
+    </div>
+
   </header>
 </template>
 
@@ -64,7 +84,8 @@ export default {
   data() {
     return {
       keyword: '',
-      isCategoryOpen: false
+      isCategoryOpen: false,
+      showCartLoginModal: false
     }
   },
   mounted() {
@@ -85,6 +106,17 @@ export default {
       if (menu && !menu.contains(event.target)) {
         this.isCategoryOpen = false
       }
+    },
+    handleCartClick() {
+      // TODO: 실제 로그인 여부와 연동 필요
+      this.showCartLoginModal = true
+    },
+    closeCartLoginModal() {
+      this.showCartLoginModal = false
+    },
+    goToLoginFromModal() {
+      this.showCartLoginModal = false
+      this.$router.push('/login')
     }
   }
 }

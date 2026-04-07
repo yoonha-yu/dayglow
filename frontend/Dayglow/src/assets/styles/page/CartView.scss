@@ -1,0 +1,264 @@
+.cart-page {
+  max-width: 1200px;
+  margin: 40px auto 80px;
+  padding: 0 40px;
+  background: #fff;
+}
+
+.cart-title {
+  margin: 0 0 24px;
+  font-size: 30px;
+  font-weight: 600;
+  color: #111;
+}
+
+.cart-empty {
+  padding: 60px 0;
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+}
+
+.cart-layout {
+  display: grid;
+  grid-template-columns: 1.8fr 1.2fr;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cart-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #666;
+}
+
+.checkbox-all input {
+  margin-right: 6px;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 40px 112px 1.6fr 136px 120px;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 20px;
+  border-radius: 16px;
+  background: #f5f5f5;
+  position: relative;
+}
+
+.item-check {
+  display: flex;
+  justify-content: center;
+}
+
+.item-check input {
+  width: 18px;
+  height: 18px;
+}
+
+.thumb {
+  width: 112px;
+  height: 112px;
+  border-radius: 10px;
+  background: #e0e0e0;
+}
+
+.info .name {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #111;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.info .option {
+  margin: 0;
+  font-size: 13px;
+  color: #777;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: flex-end;
+  width: 136px;
+
+  button {
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .qty-input {
+    width: 56px;
+    height: 28px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #fff;
+    text-align: center;
+    font-size: 14px;
+    outline: none;
+    appearance: textfield;
+    -moz-appearance: textfield;
+
+    &:focus {
+      border-color: #111;
+    }
+  }
+
+  .qty-input::-webkit-outer-spin-button,
+  .qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+.price {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111;
+  width: 120px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.remove-btn {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #111;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+
+  &:hover {
+    background: #111;
+    border-color: #111;
+    color: #fff;
+  }
+}
+
+.cart-summary {
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 28px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cart-summary .row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  color: #555;
+}
+
+.cart-summary .row.total {
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  font-weight: 600;
+  color: #111;
+}
+
+.checkout-btn {
+  margin-top: 12px;
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 999px;
+  border: none;
+  background: #111;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.qty-warning-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.qty-warning-modal {
+  width: 100%;
+  max-width: 440px;
+  background: #181818;
+  color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  padding: 28px 26px 22px;
+
+  h2 {
+    margin: 0 0 10px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0 0 20px;
+    font-size: 13px;
+    color: #ccc;
+    line-height: 1.5;
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    button {
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .secondary {
+      border: 1px solid #555;
+      background: transparent;
+      color: #ddd;
+    }
+
+    .primary {
+      border: none;
+      background: #fff;
+      color: #111;
+      font-weight: 600;
+    }
+  }
+}
+
