@@ -23,6 +23,7 @@ public class SiteUser {
     private String username;
     private String password;
     private String email;
+    private String address;
 
     @Column(nullable = false)
     private int money = 0;

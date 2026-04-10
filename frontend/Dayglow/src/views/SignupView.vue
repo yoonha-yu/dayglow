@@ -50,42 +50,89 @@
         </div>
 
         <div class="form-group">
-          <label for="phone">휴대폰 번호</label>
-          <div class="phone-row">
+          <label for="email">이메일</label>
+          <div class="verify-row">
             <input
-              id="phone"
-              v-model="phone"
-              type="tel"
-              placeholder="010-0000-0000"
+              id="email"
+              v-model="email"
+              type="email"
+              placeholder="example@dayglow.com"
               required
             />
             <button
               class="outline-button"
+              :class="{ completed: isEmailCodeSent }"
               type="button"
-              @click="sendVerificationCode"
+              @click="sendEmailVerificationCode"
             >
-              인증번호 전송
+              {{ isEmailCodeSent ? '✓ 인증번호 전송 완료' : '인증번호 전송' }}
             </button>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="code">인증번호</label>
-          <div class="phone-row">
+          <label for="emailCode">이메일 인증번호</label>
+          <div class="verify-row">
             <input
-              id="code"
-              v-model="verificationCode"
+              id="emailCode"
+              v-model="emailVerificationCode"
               type="text"
               placeholder="6자리 인증번호"
             />
             <button
               class="outline-button"
+              :class="{ completed: isEmailVerified }"
               type="button"
-              @click="verifyCode"
+              @click="verifyEmailCode"
             >
-              인증하기
+              {{ isEmailVerified ? '✓ 인증 완료' : '인증하기' }}
             </button>
           </div>
+        </div>
+
+        <div class="form-group">
+          <label for="address">주소</label>
+          <div class="address-row">
+            <input
+              id="address"
+              v-model="address"
+              class="address-input"
+              type="text"
+              placeholder="주소를 입력하세요"
+              readonly
+              required
+            />
+            <button
+              class="outline-button"
+              type="button"
+              @click="openPostcodeSearch"
+            >
+              주소 검색
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="detailAddress">상세주소</label>
+          <input
+            id="detailAddress"
+            v-model="detailAddress"
+            type="text"
+            placeholder="상세주소를 입력하세요 (예: 101동 1203호)"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="postcode">우편번호</label>
+          <input
+            id="postcode"
+            v-model="postcode"
+            class="postcode-input"
+            type="text"
+            placeholder="우편번호를 입력하세요"
+            readonly
+            required
+          />
         </div>
 
         <button class="auth-button" type="submit">
@@ -100,6 +147,22 @@
         </button>
       </div>
     </div>
+
+    <div
+      v-if="showEmailNoticeModal"
+      class="email-notice-backdrop"
+      @click.self="closeEmailNoticeModal"
+    >
+      <div class="email-notice-modal">
+        <h2>알림</h2>
+        <p>{{ emailNoticeMessage }}</p>
+        <div class="modal-actions">
+          <button type="button" class="primary" @click="closeEmailNoticeModal">
+            확인
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -112,19 +175,82 @@ export default {
       name: '',
       password: '',
       passwordConfirm: '',
-      phone: '',
-      verificationCode: ''
+      email: '',
+      emailVerificationCode: '',
+      postcode: '',
+      address: '',
+      detailAddress: '',
+      isEmailCodeSent: false,
+      isEmailVerified: false,
+      showEmailNoticeModal: false,
+      emailNoticeMessage: ''
     }
+  },
+  mounted() {
+    this.loadDaumPostcodeScript()
   },
   methods: {
     onSubmit() {
       console.log('회원가입 시도', this.username)
     },
-    sendVerificationCode() {
-      console.log('인증번호 전송 시도', this.phone)
+    sendEmailVerificationCode() {
+      if (!this.email.trim()) {
+        this.openEmailNoticeModal('이메일을 작성해주세요.')
+        return
+      }
+
+      this.isEmailCodeSent = true
+      this.isEmailVerified = false
+      console.log('이메일 인증번호 전송 시도', this.email)
+      this.openEmailNoticeModal('인증번호 전송이 완료되었습니다.')
     },
-    verifyCode() {
-      console.log('인증번호 확인 시도', this.verificationCode)
+    verifyEmailCode() {
+      if (!this.isEmailCodeSent) {
+        this.openEmailNoticeModal('먼저 인증번호를 전송해주세요.')
+        return
+      }
+      if (!this.emailVerificationCode.trim()) {
+        this.openEmailNoticeModal('인증번호를 입력해주세요.')
+        return
+      }
+
+      this.isEmailVerified = true
+      console.log('이메일 인증번호 확인 시도', this.emailVerificationCode)
+      this.openEmailNoticeModal('이메일 인증이 완료되었습니다.')
+    },
+    openEmailNoticeModal(message) {
+      this.emailNoticeMessage = message
+      this.showEmailNoticeModal = true
+    },
+    closeEmailNoticeModal() {
+      this.showEmailNoticeModal = false
+    },
+    loadDaumPostcodeScript() {
+      if (window.daum && window.daum.Postcode) {
+        return
+      }
+
+      if (document.getElementById('daum-postcode-script')) {
+        return
+      }
+
+      const script = document.createElement('script')
+      script.id = 'daum-postcode-script'
+      script.src = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'
+      document.body.appendChild(script)
+    },
+    openPostcodeSearch() {
+      if (!(window.daum && window.daum.Postcode)) {
+        alert('주소 검색 스크립트를 불러오는 중입니다. 잠시 후 다시 시도해주세요.')
+        return
+      }
+
+      new window.daum.Postcode({
+        oncomplete: (data) => {
+          this.postcode = data.zonecode || ''
+          this.address = data.roadAddress || data.jibunAddress || ''
+        }
+      }).open()
     },
     goToLogin() {
       this.$router.push('/login')
